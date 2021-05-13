@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Covid Vaccine Checker</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_phoneNo">Phone Number</string>
+    <string name="prompt_otp">Enter OTP</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_phoneNo">Not a valid phone number</string>
+    <string name="invalid_otp">Wrong OTP</string>
+    <string name="login_failed">"Login failed"</string>
+</resources>
