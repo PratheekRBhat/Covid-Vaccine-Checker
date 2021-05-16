@@ -7,7 +7,7 @@ import com.pratheek.covidvaccinechecker.repository.SignInRepo
 import kotlinx.coroutines.launch
 
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
-    private var signInRepo: SignInRepo? = null
+    var signInRepo: SignInRepo? = null
 
     init {
         signInRepo = SignInRepo(application)
@@ -17,11 +17,11 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     fun confirmOTP(body: String) = viewModelScope.launch { safeConfirmOTP(body) }
 
-    private suspend fun safeGenerateOTP(body: String) {
+    private fun safeGenerateOTP(body: String) {
         signInRepo?.generateOTP(body)
     }
 
-    private suspend fun safeConfirmOTP(body: String) {
+    private fun safeConfirmOTP(body: String) {
         signInRepo?.confirmOTP(body)
     }
 }

@@ -5,8 +5,10 @@
     <string name="prompt_phoneNo">Phone Number</string>
     <string name="prompt_otp">Enter OTP</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_get_otp">Get OTP</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_phoneNo">Not a valid phone number</string>
     <string name="invalid_otp">Wrong OTP</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="login_title">Let\'s Get Started</string>
 </resources>

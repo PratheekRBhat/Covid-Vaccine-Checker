@@ -3,6 +3,7 @@ package com.pratheek.covidvaccinechecker.repository
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.GsonBuilder
 import com.pratheek.covidvaccinechecker.api.RetrofitInstance
 import com.pratheek.covidvaccinechecker.models.ConfirmOTPResponse
 import com.pratheek.covidvaccinechecker.models.SendOTPResponse
@@ -25,16 +26,15 @@ class SignInRepo (applicationContext: Application){
         confirmOTPResponse = MutableLiveData()
     }
 
-    suspend fun generateOTP(body: String): MutableLiveData<SendOTPResponse>? {
+    fun generateOTP(body: String): MutableLiveData<SendOTPResponse>? {
         val request = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         RetrofitInstance.api.generateOTP(request).enqueue(object : Callback<SendOTPResponse> {
             override fun onResponse(
                 call: Call<SendOTPResponse>,
                 response: Response<SendOTPResponse>
             ) {
-                if (checkApiResponse(response.code(), response.errorBody())) {
-                    sendOTPResponse?.postValue(response.body())
-                }
+                checkApiResponse(response.code(), response.errorBody())
+                sendOTPResponse?.postValue(response.body())
             }
 
             override fun onFailure(call: Call<SendOTPResponse>, t: Throwable) {
@@ -44,16 +44,15 @@ class SignInRepo (applicationContext: Application){
         return sendOTPResponse
     }
 
-    suspend fun confirmOTP(body: String): MutableLiveData<ConfirmOTPResponse>? {
+    fun confirmOTP(body: String): MutableLiveData<ConfirmOTPResponse>? {
         val request = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         RetrofitInstance.api.confirmOTP(request).enqueue(object : Callback<ConfirmOTPResponse> {
             override fun onResponse(
                 call: Call<ConfirmOTPResponse>,
                 response: Response<ConfirmOTPResponse>
             ) {
-               if (checkApiResponse(response.code(), response.errorBody())) {
-                    confirmOTPResponse?.postValue(response.body())
-                }
+                checkApiResponse(response.code(), response.errorBody())
+                confirmOTPResponse?.postValue(response.body())
             }
 
             override fun onFailure(call: Call<ConfirmOTPResponse>, t: Throwable) {
@@ -76,11 +75,11 @@ class SignInRepo (applicationContext: Application){
             }
             400 -> {
                 return try {
-                    val jObjError = JSONObject(errorBody.toString())
-                    Toast.makeText(application.applicationContext, "Error: ${jObjError.getString("error")}", Toast.LENGTH_SHORT).show()
+                    val jObjError = JSONObject(errorBody!!.string())
+                    Toast.makeText(application.applicationContext, "Error: ${jObjError.getString("error")}", Toast.LENGTH_LONG).show()
                     false
                 } catch (e: Exception) {
-                    Toast.makeText(application.applicationContext, e.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(application.applicationContext, "OTP Already Sent", Toast.LENGTH_LONG).show()
                     false
                 }
             }

@@ -8,13 +8,13 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface CowinAPI {
-    @POST("/v2/auth/public/generateOTP")
-    suspend fun generateOTP(
+    @POST("/api/v2/auth/public/generateOTP")
+    fun generateOTP(
         @Body json: RequestBody
     ): Call<SendOTPResponse>
 
-    @POST("/v2/auth/public/confirmOTP")
-    suspend fun confirmOTP(
+    @POST("/api/v2/auth/public/confirmOTP")
+    fun confirmOTP(
         @Body json: RequestBody
     ): Call<ConfirmOTPResponse>
 }
