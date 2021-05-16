@@ -3,7 +3,6 @@ package com.pratheek.covidvaccinechecker.repository
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.GsonBuilder
 import com.pratheek.covidvaccinechecker.api.RetrofitInstance
 import com.pratheek.covidvaccinechecker.models.ConfirmOTPResponse
 import com.pratheek.covidvaccinechecker.models.SendOTPResponse
@@ -27,8 +26,8 @@ class SignInRepo (applicationContext: Application){
     }
 
     fun generateOTP(body: String): MutableLiveData<SendOTPResponse>? {
-        val request = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        RetrofitInstance.api.generateOTP(request).enqueue(object : Callback<SendOTPResponse> {
+        val requestBody = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        RetrofitInstance.api.generateOTP(requestBody).enqueue(object : Callback<SendOTPResponse> {
             override fun onResponse(
                 call: Call<SendOTPResponse>,
                 response: Response<SendOTPResponse>
@@ -45,8 +44,8 @@ class SignInRepo (applicationContext: Application){
     }
 
     fun confirmOTP(body: String): MutableLiveData<ConfirmOTPResponse>? {
-        val request = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        RetrofitInstance.api.confirmOTP(request).enqueue(object : Callback<ConfirmOTPResponse> {
+        val requestBody = body.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        RetrofitInstance.api.confirmOTP(requestBody).enqueue(object : Callback<ConfirmOTPResponse> {
             override fun onResponse(
                 call: Call<ConfirmOTPResponse>,
                 response: Response<ConfirmOTPResponse>
